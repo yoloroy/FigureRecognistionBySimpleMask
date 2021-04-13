@@ -12,7 +12,7 @@ fun main() {
 
     val pic = ImageIO.read(File(inputPath))
 
-    println("This is ${pic.figure.name}") // .figure starts recognizing
+    println("This is ${pic.figure.name}") // .figure starts recognizing and returns enum object
 }
 ```
 
