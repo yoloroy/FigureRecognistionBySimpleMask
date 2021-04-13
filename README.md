@@ -1,5 +1,5 @@
 # FigureRecognistionBySimpleMask
-:eyes: Recognizes the shapes in the picture by the mask
+Recognizes the shapes in the picture by the mask :art: -> :symbols:
 
 ## :iphone: Image
 <img src="https://github.com/yoloroy/FigureRecognistionBySimpleMask/blob/master/readmeRes/usageImage.gif" width="480" height="560">
