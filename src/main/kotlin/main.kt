@@ -60,8 +60,12 @@ val BufferedImage.figure: Figures get() {
 private fun getSimilarityValue(points: List<Point>, pic: BufferedImage): Double {
     var counter = 0
     points.forEach {
-        if (pic.getRGB(it.x, it.y).color.rgb == Color.BLACK.rgb)
+        if (pic.getRGB(it.x, it.y).color.rgb == Color.BLACK.rgb) {
+            pic.setRGB(it.x, it.y, Color.RED.rgb)
             counter++
+        } else {
+            pic.setRGB(it.x, it.y, Color.GRAY.rgb)
+        }
     }
 
     return counter.toDouble() / points.size
@@ -95,7 +99,7 @@ private fun BufferedImage.loadFrom(pic: BufferedImage) {
 
 fun BufferedImage.fitToTheEdges() {
     val (topLeft, bottomRight) = findBounds()
-    val boundsSize = bottomRight - topLeft + Point(1, 1)
+    val boundsSize = bottomRight - topLeft
     val boundsRatioX = MASK_SIZES / (boundsSize.getX())
     val boundsRatioY = MASK_SIZES / (boundsSize.getY())
 
