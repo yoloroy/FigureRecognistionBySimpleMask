@@ -1,6 +1,6 @@
 # FigureRecognistionBySimpleMask
 
-recognizes the shapes in the picture by the mask
+Recognizes the shapes in the picture by the mask
 
 ## Usage
 ### Image
