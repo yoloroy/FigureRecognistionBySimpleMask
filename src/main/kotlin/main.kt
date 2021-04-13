@@ -15,14 +15,14 @@ enum class Figures {
     Circle {
         override val path = "figures/circle_mask.png"
     },
-    Quad {
-        override val path = "figures/quad_mask.png"
+    Square {
+        override val path = "figures/square_mask.png"
     };
 
     abstract val path: String
 
     companion object {
-        fun asList() = listOf(Triangle, Circle, Quad)
+        fun asList() = listOf(Triangle, Circle, Square)
     }
 }
 
