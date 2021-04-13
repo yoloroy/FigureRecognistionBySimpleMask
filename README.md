@@ -1,6 +1,9 @@
 # FigureRecognistionBySimpleMask
 Recognizes the shapes in the picture by the mask :art: -> :symbols:
 
+## :rocket:How to launch
+* Download this project and launch in IDE, kotlin jvm
+
 ## :iphone: Image
 <img src="https://github.com/yoloroy/FigureRecognistionBySimpleMask/blob/master/readmeRes/usageImage.gif" width="480" height="560">
 
@@ -17,8 +20,8 @@ fun main() {
 }
 ```
 
-## :rocket:How to launch
-* Download this project and launch in IDE, kotlin jvm
+* Samples: https://github.com/yoloroy/FigureRecognistionBySimpleMask/tree/master/src/main/resources/samples
+* Masks: https://github.com/yoloroy/FigureRecognistionBySimpleMask/tree/master/src/main/resources/figures
 
 ## :white_check_mark:TODO
 * move algorithm to separate file
