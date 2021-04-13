@@ -8,19 +8,36 @@ val classLoader: ClassLoader get() = Thread.currentThread().contextClassLoader!!
 
 const val MASK_SIZES = 16
 
-val figuresAndPaths = mapOf(
-    "triangle" to "figures/triangle_mask.png",
-    "circle" to "figures/circle_mask.png",
-    "quad" to "figures/quad_mask.png"
-)
+enum class Figures {
+    Triangle {
+        override val path = "figures/triangle_mask.png"
+    },
+    Circle {
+        override val path = "figures/circle_mask.png"
+    },
+    Quad {
+        override val path = "figures/quad_mask.png"
+    };
+
+    abstract val path: String
+
+    companion object {
+        fun asList() = listOf(Triangle, Circle, Quad)
+    }
+}
 
 fun main() {
     println("Enter input file path:")
     val inputPath = readLine()!!
 
     val pic = ImageIO.read(File(inputPath))
+
+    println("This is ${pic.figure.name}")
+}
+
+val BufferedImage.figure: Figures get() {
     val compressedPic = BufferedImage(MASK_SIZES, MASK_SIZES, BufferedImage.TYPE_INT_ARGB).apply {
-        loadFrom(pic)
+        loadFrom(this@figure)
 
         fitToTheEdges()
     }
@@ -32,14 +49,12 @@ fun main() {
         }
     }
 
-    figuresAndPaths.forEach { (figureName, figurePathString) ->
-        val figurePath = classLoader.getResource(figurePathString)!!.toURI()
+    return Figures.asList().maxByOrNull { figure ->
+        val figurePath = classLoader.getResource(figure.path)!!.toURI()
         val figurePic = ImageIO.read(File(figurePath))
 
-        val figureValue: Double = getSimilarityValue(points, figurePic)
-
-        println("This is a ${ (figureValue*100).toInt() }% $figureName")
-    }
+        getSimilarityValue(points, figurePic)
+    }!!
 }
 
 private fun getSimilarityValue(points: List<Point>, pic: BufferedImage): Double {
