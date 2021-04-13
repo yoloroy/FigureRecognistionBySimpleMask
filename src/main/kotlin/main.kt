@@ -70,6 +70,10 @@ private fun getSimilarityValue(points: List<Point>, pic: BufferedImage): Double 
 private fun BufferedImage.loadFrom(pic: BufferedImage) {
     val sizeRatio = Point(pic.width / MASK_SIZES, pic.height / MASK_SIZES)
 
+    foreachIndexed { x, y ->
+        setRGB(x, y, Color.WHITE.rgb)
+    }
+
     pic.foreachIndexed { xi, yi ->
         val x = (xi.toDouble() / sizeRatio.x).toInt().let {
             if (it >= MASK_SIZES)
@@ -84,7 +88,6 @@ private fun BufferedImage.loadFrom(pic: BufferedImage) {
                 it
         }
 
-        setRGB(x, y, Color.WHITE.rgb)
         if (red < 128 && green < 128 && blue < 128)
             setRGB(x, y, Color.BLACK.rgb)
     }
