@@ -27,3 +27,4 @@ fun main() {
 
 ## :white_check_mark:TODO
 * add adapters for different platforms in platform-specific branches
+* move Color to core
