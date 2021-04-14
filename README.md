@@ -3,6 +3,8 @@ Recognizes the shapes in the picture by the mask :art: -> :symbols:
 
 ## :rocket:How to launch
 * Download this project and launch in IDE, kotlin jvm
+* Configure files in [recognistionFigure.local.adapters package](https://github.com/yoloroy/FigureRecognistionBySimpleMask/tree/master/src/main/kotlin/recognazingFigure/local/adapters) for your platform, Java/Android/Native/Korge/...
+* Configure file in [recognistionFigure.local.figures package](https://github.com/yoloroy/FigureRecognistionBySimpleMask/tree/master/src/main/kotlin/recognazingFigure/local/figures) for your resources
 
 ## :iphone: Image
 <img src="https://github.com/yoloroy/FigureRecognistionBySimpleMask/blob/master/readmeRes/usageImage.gif" width="480" height="560">
@@ -24,4 +26,4 @@ fun main() {
 * Masks: https://github.com/yoloroy/FigureRecognistionBySimpleMask/tree/master/src/main/resources/figures
 
 ## :white_check_mark:TODO
-* move algorithm to separate file
+* add adapters for different platforms in platform-specific branches
