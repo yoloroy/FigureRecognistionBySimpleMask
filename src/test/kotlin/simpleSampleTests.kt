@@ -1,41 +1,41 @@
 import org.junit.Test
-import recognazingFigure.*
-import java.awt.Point
-import java.awt.image.BufferedImage
-import java.io.File
-import javax.imageio.ImageIO
+import recognazingFigure.local.adapters.readImage
+import recognazingFigure.core.*
+import recognazingFigure.core.ColorMatrix
+import recognazingFigure.local.figures.Figures
+import recognazingFigure.local.figures.MASK_SIZES
 import kotlin.test.assertEquals
 
 class RecognizeFigureTest {
     @Test
     fun testTriangle() {
         val inputPath = "src/test/resources/samples/triangle.jpg"
-        val pic = ImageIO.read(File(inputPath))
+        val pic = readImage(inputPath)
 
-        assertEquals(pic.figure, Figures.Triangle)
+        assertEquals(Figures.Triangle, pic.figure)
     }
 
     @Test
     fun testSquare() {
         val inputPath = "src/test/resources/samples/square.jpg"
-        val pic = ImageIO.read(File(inputPath))
+        val pic = readImage(inputPath)
 
-        assertEquals(pic.figure, Figures.Square)
+        assertEquals(Figures.Square, pic.figure)
     }
 
     @Test
     fun testCircle() {
         val inputPath = "src/test/resources/samples/circle.png"
-        val pic = ImageIO.read(File(inputPath))
+        val pic = readImage(inputPath)
 
-        assertEquals(pic.figure, Figures.Circle)
+        assertEquals(Figures.Circle, pic.figure)
     }
 
     @Test
     fun testFitting() {
         val inputPath = "src/test/resources/samples/triangle.jpg"
-        val pic = ImageIO.read(File(inputPath))
-        val compressedPic = BufferedImage(MASK_SIZES, MASK_SIZES, BufferedImage.TYPE_INT_ARGB).apply {
+        val pic = readImage(inputPath)
+        val compressedPic = ColorMatrix(MASK_SIZES, MASK_SIZES).apply {
             loadFrom(pic)
 
             fitToTheEdges()
@@ -43,7 +43,7 @@ class RecognizeFigureTest {
 
         val (tl, br) = compressedPic.findBounds()
 
-        assertEquals(tl, Point(0, 0))
-        assertEquals(br, Point(compressedPic.width - 1, compressedPic.height - 1))
+        assertEquals(Point(0, 0), tl)
+        assertEquals(Point(compressedPic.width - 1, compressedPic.height - 1), br)
     }
 }

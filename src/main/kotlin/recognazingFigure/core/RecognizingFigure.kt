@@ -1,16 +1,16 @@
-package recognazingFigure
+package recognazingFigure.core
 
-import java.awt.Color
-import java.awt.Point
-import java.awt.image.BufferedImage
-import java.io.File
-import javax.imageio.ImageIO
+import recognazingFigure.local.adapters.Color
+import recognazingFigure.local.adapters.color
+import recognazingFigure.local.adapters.readImage
+import recognazingFigure.local.figures.Figures
+import recognazingFigure.local.figures.MASK_SIZES
 
 val classLoader: ClassLoader get() = Thread.currentThread().contextClassLoader!!
 
-val BufferedImage.figure: Figures
+val ColorMatrix.figure: Figures
     get() {
-        val compressedPic = BufferedImage(MASK_SIZES, MASK_SIZES, BufferedImage.TYPE_INT_ARGB).apply {
+        val compressedPic = ColorMatrix(MASK_SIZES, MASK_SIZES).apply {
             loadFrom(this@figure)
 
             fitToTheEdges()
@@ -24,14 +24,14 @@ val BufferedImage.figure: Figures
         }
 
         return Figures.asList().maxByOrNull { figure ->
-            val figurePath = classLoader.getResource(figure.path)!!.toURI()
-            val figurePic = ImageIO.read(File(figurePath))
+            val figurePath = classLoader.getResource(figure.path)!!.path
+            val figurePic = readImage(figurePath)
 
             getSimilarityValue(points, figurePic)
         }!!
     }
 
-private fun getSimilarityValue(points: List<Point>, pic: BufferedImage): Double {
+private fun getSimilarityValue(points: List<Point>, pic: ColorMatrix): Double {
     var counter = 0
     points.forEach {
         if (pic.getRGB(it.x, it.y).color.rgb == Color.BLACK.rgb) {
@@ -45,7 +45,7 @@ private fun getSimilarityValue(points: List<Point>, pic: BufferedImage): Double 
     return counter.toDouble() / points.size
 }
 
-fun BufferedImage.loadFrom(pic: BufferedImage) {
+fun ColorMatrix.loadFrom(pic: ColorMatrix) {
     val sizeRatio = Point(pic.width / MASK_SIZES, pic.height / MASK_SIZES)
 
     foreachIndexed { x, y ->
@@ -71,7 +71,7 @@ fun BufferedImage.loadFrom(pic: BufferedImage) {
     }
 }
 
-fun BufferedImage.fitToTheEdges() {
+fun ColorMatrix.fitToTheEdges() {
     val (topLeft, bottomRight) = findBounds()
     val boundsSize = bottomRight - topLeft
     val boundsRatioX = MASK_SIZES / (boundsSize.getX())
@@ -106,7 +106,7 @@ fun BufferedImage.fitToTheEdges() {
     }
 }
 
-fun BufferedImage.findBounds(): Pair<Point, Point> {
+fun ColorMatrix.findBounds(): Pair<Point, Point> {
     var topBound = height
     var bottomBound = 0
     var leftBound = width
@@ -123,26 +123,5 @@ fun BufferedImage.findBounds(): Pair<Point, Point> {
 
     return Point(leftBound, topBound) to Point(rightBound, bottomBound)
 }
-
-fun BufferedImage.foreachIndexed(callback: Color.(x: Int, y: Int) -> Unit) {
-    for (x in 0 until width)
-        for (y in 0 until height)
-            getRGB(x, y).color.callback(x, y)
-}
-
-val Int.color: Color get() = Color(this shr 16 and 0xFF, this shr 8 and 0xFF, this shr 0 and 0xFF)
-
-private operator fun Point.plus(other: Point): Point = Point(this.x + other.x, this.y + other.y)
-
-private operator fun Point.minus(other: Point): Point = Point(this.x - other.x, this.y - other.y)
-
-private operator fun Point.div(i: Int): Point = Point(x / i, y / i)
-
-operator fun <T> Array<Array<T>>.set(point: Point, value: T) {
-    this[point.y][point.x] = value
-}
-
-private operator fun Pair<Point, Point>.contains(point: Point): Boolean =
-    point.x in first.x..second.x && point.y in first.y..second.y
 
 inline fun <E> buildList(block: MutableList<E>.() -> Unit): MutableList<E> = mutableListOf<E>().apply(block)

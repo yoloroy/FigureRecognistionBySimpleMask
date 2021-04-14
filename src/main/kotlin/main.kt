@@ -1,12 +1,11 @@
-import recognazingFigure.figure
-import java.io.File
-import javax.imageio.ImageIO
+import recognazingFigure.core.figure
+import recognazingFigure.local.adapters.readImage
 
 fun main() {
     println("Enter input file path:")
     val inputPath = readLine()!!
 
-    val pic = ImageIO.read(File(inputPath))
+    val pic = readImage(inputPath)
 
     println("This is ${pic.figure.name}")
 }

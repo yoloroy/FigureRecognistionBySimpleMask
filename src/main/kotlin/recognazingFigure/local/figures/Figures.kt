@@ -1,4 +1,4 @@
-package recognazingFigure
+package recognazingFigure.local.figures
 
 const val MASK_SIZES = 16
 
