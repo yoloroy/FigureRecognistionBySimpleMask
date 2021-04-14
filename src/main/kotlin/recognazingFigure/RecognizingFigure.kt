@@ -45,7 +45,7 @@ private fun getSimilarityValue(points: List<Point>, pic: BufferedImage): Double 
     return counter.toDouble() / points.size
 }
 
-private fun BufferedImage.loadFrom(pic: BufferedImage) {
+fun BufferedImage.loadFrom(pic: BufferedImage) {
     val sizeRatio = Point(pic.width / MASK_SIZES, pic.height / MASK_SIZES)
 
     foreachIndexed { x, y ->
