@@ -26,5 +26,6 @@ fun main() {
 * Masks: https://github.com/yoloroy/FigureRecognistionBySimpleMask/tree/master/src/main/resources/figures
 
 ## :white_check_mark:TODO
-* add adapters for different platforms in platform-specific branches
+* unite compression and fitting for better work
 * move Color to core
+* add adapters for different platforms in platform-specific branches
